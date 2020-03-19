@@ -4,7 +4,7 @@ asserts that packages are truly deduped
 
 ## install
 
-`npm install [-I|-D] dedupe-assert`
+`npm install [--save|--save-dev] dedupe-assert`
 
 ## usage
 

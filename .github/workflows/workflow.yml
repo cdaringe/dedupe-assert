@@ -1,0 +1,42 @@
+
+name: main
+on: [push]
+jobs:
+  run:
+    name: run
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: setup-node
+      uses: actions/setup-node@master
+      with:
+        node-version: 12.x
+    - name: install
+      run: npm ci
+    - name: format check
+      run: npm run format -- --check
+    - name: lint
+      run: npm run lint
+    - name: build
+      run: npm run build
+    - name: test
+      run: npm test
+    - name: commitlint
+      uses: wagoid/commitlint-github-action@v1.2.2
+    - name: setting git values
+      run: |
+        git config --local user.email "cdaringe@cdaringe.com"
+        git config --local user.name "cdaringe"
+    - name: release
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        if [[ "$GITHUB_REF" = "refs/heads/master" ]]; then
+          GITHUB_TOKEN=$GH_TOKEN npx semantic-release --verbose
+        else
+          echo "skipping release on branch $GITHUB_REF"
+        fi

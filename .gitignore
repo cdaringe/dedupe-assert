@@ -1,0 +1,7 @@
+node_modules
+.DS_Store
+*.js
+*.log
+*.err
+*.map
+src/**/*.d.ts

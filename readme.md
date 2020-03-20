@@ -2,6 +2,11 @@
 
 asserts that packages are truly deduped
 
+![main](https://github.com/cdaringe/dedupe-assert/workflows/main/badge.svg)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![TypeScript package](https://img.shields.io/badge/language-typescript-blue)](https://www.typescriptlang.org)
+
+
 ## install
 
 `npm install [--save|--save-dev] dedupe-assert`
@@ -53,6 +58,18 @@ $ dedupe-assert --matches=/.*/
 ```
 
 😵!
+
+to use a library:
+
+```ts
+import { assess, report } from 'dedupe-assert'
+const { conflictedDepsByName } = await assess({ dirname: '/path/to/project' })
+const report = await getReport({
+  conflictedDepsByName,
+  alertOnMatches: ['react', /best-package$/]
+})
+// then do great stuff.  see `src/` dir for TS interfaces
+```
 
 ## why
 

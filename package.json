@@ -1,7 +1,7 @@
 {
   "name": "dedupe-assert",
   "version": "0.0.0--semantic-release",
-  "description": "",
+  "description": "asserts that packages are truly deduped",
   "main": "src/mod.js",
   "types": "src/mod.d.ts",
   "scripts": {
@@ -15,14 +15,25 @@
     "type": "git",
     "url": "git+https://github.com/cdaringe/dedupe-assert.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "dedupe",
+    "npm",
+    "yarn",
+    "ensure",
+    "assert",
+    "check",
+    "duplicate",
+    "redundant",
+    "package",
+    "packages"
+  ],
+  "author": "cdaringe",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cdaringe/dedupe-assert/issues"
   },
   "homepage": "https://github.com/cdaringe/dedupe-assert#readme",
-  "bin": "./src/bin",
+  "bin": "./src/bin.js",
   "files": [
     "src"
   ],

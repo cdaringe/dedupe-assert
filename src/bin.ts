@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import meow = require('meow')
 import { assess, warn, log, report as getReport } from './mod'
 import { Matcher } from './types'
+import meow = require('meow')
 const cmdName = require('../package.json').name
 
 const cli = meow(
@@ -35,7 +35,7 @@ Examples
 )
 
 export const parseMatcher = (str: string): Matcher =>
-  str.startsWith('/') ? new Function(`return ${str}`)() : str
+  str.startsWith('/') ? new Function(`return ${str}`)() : str // eslint-disable-line
 
 export const parseMatcherInput = (str: string = ''): Matcher[] =>
   str
@@ -60,18 +60,20 @@ async function go () {
     warn('please provide matches, e.g. --matches=react,/webpack-*/,redux')
     process.exit(1)
   }
-  log(`resolving dependencies`)
+  log('resolving dependencies')
   const { conflictedDepsByName } = await assess({ dirname })
-  log(`creating report`)
+  log('creating report')
   const report = await getReport({
     conflictedDepsByName,
     alertOnMatches: matches
   })
   if (report) {
-    warn([
-      '🚨 The following packages are required to be deduped',
-      'but have >1 versions'
-    ].join(' '))
+    warn(
+      [
+        '🚨 The following packages are required to be deduped',
+        'but have >1 versions'
+      ].join(' ')
+    )
     console.table(report, ['name', 'versions'])
     process.exit(1)
   } else {

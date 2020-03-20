@@ -1,11 +1,12 @@
 import resolveDeps, { Dep } from 'snyk-resolve-deps'
 import { Matcher, DepNameAtVersions } from './types'
+const naturalSort = require('natural-sort')()
 
 export const warn = (...args: any[]) => console.warn('[dedupe-assert]', ...args)
 export const log = (...args: any[]) => console.log('[dedupe-assert]', ...args)
 
 export const assess = async ({ dirname }: { dirname: string }) => {
-  const rootDep = await resolveDeps(dirname)
+  const rootDep = await resolveDeps(dirname, { dev: true })
   return analyze({ rootDep })
 }
 
@@ -49,13 +50,15 @@ export function report ({
     }
   }
   if (!Object.keys(alertingConflicts).length) return null
-  return Object.keys(alertingConflicts).reduce(
-    (acc, name, i) => [
-      ...acc,
-      { name, versions: Array.from(alertingConflicts[name]).join(', ') }
-    ],
-    [] as { name: string; versions: string; }[]
-  )
+  return Object.keys(alertingConflicts)
+    .reduce(
+      (acc, name, i) => [
+        ...acc,
+        { name, versions: Array.from(alertingConflicts[name]).join(', ') }
+      ],
+      [] as { name: string; versions: string }[]
+    )
+    .sort((a, b) => naturalSort(a.name, b.name))
 }
 
 function walk ({ dep, onVisit }: { dep: Dep; onVisit: (dep: Dep) => void }) {

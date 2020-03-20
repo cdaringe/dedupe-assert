@@ -14,7 +14,8 @@
       "program": "${workspaceFolder}/src/bin.js",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
-      ]
+      ],
+      "args": ["--matches=/.*/"]
     }
   ]
 }

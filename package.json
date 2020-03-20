@@ -49,6 +49,7 @@
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "prettier-standard": "^16.2.1",
+    "semantic-release": "^17.0.4",
     "standardx": "^5.0.0",
     "typescript": "^3.8.3"
   },
